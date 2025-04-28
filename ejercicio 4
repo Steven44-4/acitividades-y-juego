@@ -1,0 +1,96 @@
+# Clase Persona (padre)
+class Persona:
+    def __init__(self, nombre, edad, documento):
+        self.__nombre = nombre
+        self.__edad = edad
+        self.__documento = documento
+
+    # Getter y Setter para nombre
+    @property
+    def nombre(self):
+        return self.__nombre
+    
+    @nombre.setter
+    def nombre(self, nombre):
+        self.__nombre = nombre
+
+    # Getter y Setter para edad con validación
+    @property
+    def edad(self):
+        return self.__edad
+
+    @edad.setter
+    def edad(self, edad):
+        if edad > 0:
+            self.__edad = edad
+        else:
+            raise ValueError("La edad debe ser mayor a 0")
+
+    # Getter y Setter para documento
+    @property
+    def documento(self):
+        return self.__documento
+    
+    @documento.setter
+    def documento(self, documento):
+        self.__documento = documento
+
+
+# Clase Paciente (hija)
+class Paciente(Persona):
+    def __init__(self, nombre, edad, documento, diagnostico):
+        super().__init__(nombre, edad, documento)
+        self.__diagnostico = diagnostico
+        self.__historial = []
+
+    # Método para agregar al historial
+    def agregar_historial(self, entrada):
+        self.__historial.append(entrada)
+
+    # Método para ver el historial
+    def ver_historial(self):
+        return self.__historial
+
+    # Método para ver el diagnóstico
+    def ver_diagnostico(self):
+        return self.__diagnostico
+
+
+# Clase Doctor (hija)
+class Doctor(Persona):
+    def __init__(self, nombre, edad, documento, especialidad):
+        super().__init__(nombre, edad, documento)
+        self.__especialidad = especialidad
+
+    # Método para ver la especialidad del doctor
+    def ver_especialidad(self):
+        return self.__especialidad
+
+    # Método para modificar diagnóstico de un paciente
+    def modificar_diagnostico(self, paciente, nuevo_diagnostico):
+        if isinstance(paciente, Paciente):
+            paciente._Paciente__diagnostico = nuevo_diagnostico
+        else:
+            raise TypeError("El objeto no es una instancia de Paciente")
+
+
+# Ejemplo de uso:
+
+# Crear una instancia de Paciente
+paciente1 = Paciente("Juan Pérez", 30, "123456789", "Resfriado")
+
+# Crear una instancia de Doctor
+doctor1 = Doctor("Dr. Gómez", 45, "987654321", "Cardiología")
+
+# El doctor modifica el diagnóstico del paciente
+doctor1.modificar_diagnostico(paciente1, "Neumonía")
+
+# Ver diagnóstico actualizado del paciente
+print(paciente1.ver_diagnostico())  # Salida: Neumonía
+
+# Agregar al historial
+paciente1.agregar_historial("Visita inicial con Dr. Gómez")
+print(paciente1.ver_historial())  # Salida: ['Visita inicial con Dr. Gómez']
+
+# Ver especialidad del doctor
+print(doctor1.ver_especialidad())  # Salida: Cardiología
