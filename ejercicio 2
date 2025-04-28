@@ -1,0 +1,47 @@
+class CarteraCripto:
+    def __init__(self, usuario):
+        self.__usuario = usuario
+        self.__saldo_btc = 0.0  # El saldo inicial de BTC es 0
+
+    def consultar_saldo(self):
+        """Método para consultar el saldo de BTC."""
+        return self.__saldo_btc
+
+    def comprar_btc(self, monto_usd, precio_actual_btc):
+        """Método para comprar BTC, dado un monto en USD y el precio actual de BTC."""
+        if monto_usd <= 0:
+            raise ValueError("El monto en USD debe ser positivo.")
+        # Convertir USD a BTC y actualizar el saldo
+        btc_comprado = monto_usd / precio_actual_btc
+        self.__saldo_btc += btc_comprado
+        print(f"Has comprado {btc_comprado} BTC.")
+
+    def vender_btc(self, monto_btc, precio_actual_btc):
+        """Método para vender BTC, dado un monto en BTC y el precio actual de BTC."""
+        if monto_btc <= 0:
+            raise ValueError("El monto de BTC a vender debe ser positivo.")
+        if monto_btc > self.__saldo_btc:
+            raise ValueError("No tienes suficientes BTC para vender.")
+        # Vender BTC y devolver el monto en USD
+        usd_recibidos = monto_btc * precio_actual_btc
+        self.__saldo_btc -= monto_btc
+        print(f"Has vendido {monto_btc} BTC y recibirás {usd_recibidos} USD.")
+        return usd_recibidos
+
+# Crear una cartera de criptomonedas para un usuario
+cartera = CarteraCripto("Steven")
+
+# Consultar saldo inicial
+print(f"Saldo inicial: {cartera.consultar_saldo()} BTC")
+
+# Comprar 1000 USD de BTC a un precio de 50000 USD por BTC
+cartera.comprar_btc(1000, 50000)
+
+# Consultar saldo después de la compra
+print(f"Saldo después de la compra: {cartera.consultar_saldo()} BTC")
+
+# Vender 0.02 BTC a un precio de 60000 USD por BTC
+cartera.vender_btc(0.02, 60000)
+
+# Consultar saldo después de la venta
+print(f"Saldo después de la venta: {cartera.consultar_saldo()} BTC")
