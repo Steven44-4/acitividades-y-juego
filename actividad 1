@@ -1,0 +1,61 @@
+class Estudiante:
+    def __init__(self, nombre, codigo):
+        self.__nombre = None
+        self.__codigo = None
+        self.__notas = []
+        self.nombre = nombre  # Usando el setter
+        self.codigo = codigo  # Usando el setter
+
+    # Propiedad para nombre
+    @property
+    def nombre(self):
+        return self.__nombre
+
+    @nombre.setter
+    def nombre(self, valor):
+        if not valor.strip():
+            raise ValueError("El nombre no puede estar vacio.")
+        self.__nombre = valor
+
+    # Propiedad para código
+    @property
+    def codigo(self):
+        return self.__codigo
+
+    @codigo.setter
+    def codigo(self, valor):
+        if not valor.isalnum():
+            raise ValueError("El código debe ser alfanumerico")
+        self.__codigo = valor
+
+    # Método para agregar una nota
+    def agregar_nota(self, nota):
+        if not (0.0 <= nota <= 5.0):
+            raise ValueError("La nota debe estar entre 0 y 5")
+        self.__notas.append(float(nota))
+
+    # Método para calcular el promedio
+    def calcular_promedio(self):
+        if not self.__notas:
+            return 0.0
+        return sum(self.__notas) / len(self.__notas)
+
+    # Método para verificar si está aprobado
+    def es_aprobado(self):
+        return self.calcular_promedio() >= 3.0
+
+est = Estudiante("Carlos Perez", "ABC123")
+est.agregar_nota(4)
+est.agregar_nota(2)
+print(est.nombre)
+print(est.codigo)
+print(est.calcular_promedio())
+print(est.es_aprobado())
+
+
+
+est = Estudiante("Maicol Pestana", "SDC123")
+est.agregar_nota(4)
+est.agregar_nota(5)
+print(est.calcular_promedio())
+print(est.es_aprobado())
