@@ -1,0 +1,59 @@
+class Empleado:
+    def __init__(self, nombre, rol, clave_acceso):
+        """Inicializa los atributos de la clase: nombre, rol y clave de acceso cifrada."""
+        self.__nombre = nombre  # Atributo privado
+        self.__rol = rol  # Atributo privado
+        # Almacenar la clave de forma cifrada (invirtiendo la cadena)
+        self.__clave_acceso = self.__cifrar_clave(clave_acceso)
+
+    @property
+    def nombre(self):
+        """Propiedad para obtener el nombre del empleado."""
+        return self.__nombre
+
+    @property
+    def rol(self):
+        """Propiedad para obtener el rol del empleado."""
+        return self.__rol
+
+    def __cifrar_clave(self, clave):
+        """Método privado para cifrar la clave (reverso de la clave)."""
+        return clave[::-1]  # Invertir la cadena para cifrar
+
+    def verificar_clave(self, clave_ingresada):
+        """Método para verificar si la clave ingresada es correcta."""
+        if self.__cifrar_clave(clave_ingresada) == self.__clave_acceso:
+            return True
+        return False
+
+    def cambiar_clave(self, clave_antigua, nueva_clave):
+        """Método para cambiar la clave solo si la clave antigua es correcta."""
+        if self.verificar_clave(clave_antigua):
+            self.__clave_acceso = self.__cifrar_clave(nueva_clave)  # Cifrar y actualizar la clave
+            print("Clave cambiada exitosamente.")
+        else:
+            print("La clave antigua es incorrecta. No se pudo cambiar la clave.")
+
+
+# Ejemplo de uso de la clase
+
+# Crear una instancia de la clase Empleado
+empleado = Empleado("Carlos", "Desarrollador", "clave123")
+
+# Consultar el nombre y rol
+print(f"Nombre: {empleado.nombre}")  # Salida: Carlos
+print(f"Rol: {empleado.rol}")  # Salida: Desarrollador
+
+# Verificar si la clave ingresada es correcta
+clave_correcta = empleado.verificar_clave("clave123")
+print(f"¿Clave correcta? {clave_correcta}")  # Salida: True
+
+# Intentar cambiar la clave con la clave antigua incorrecta
+empleado.cambiar_clave("clave_incorrecta", "nuevaClave123")  # Salida: La clave antigua es incorrecta. No se pudo cambiar la clave.
+
+# Cambiar la clave con la clave antigua correcta
+empleado.cambiar_clave("clave123", "nuevaClave123")  # Salida: Clave cambiada exitosamente.
+
+# Verificar si la nueva clave es correcta
+clave_correcta = empleado.verificar_clave("nuevaClave123")
+print(f"¿Clave correcta? {clave_correcta}")  # Salida: True
