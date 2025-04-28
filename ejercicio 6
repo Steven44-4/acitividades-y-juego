@@ -1,0 +1,59 @@
+# Clase base Empleado
+class Empleado:
+    def __init__(self, nombre, sueldo_base):
+        self.nombre = nombre
+        self.__sueldo_base = sueldo_base  # Atributo privado
+
+    # Getter para sueldo_base
+    def get_sueldo_base(self):
+        return self.__sueldo_base
+
+    # Setter para sueldo_base
+    def set_sueldo_base(self, sueldo_base):
+        if sueldo_base > 0:
+            self.__sueldo_base = sueldo_base
+        else:
+            print("El sueldo base debe ser un valor positivo.")
+
+    def calcular_salario(self):
+        raise NotImplementedError("Este método debe ser implementado por las clases hijas.")
+
+# Clase hija EmpleadoFijo
+class EmpleadoFijo(Empleado):
+    def __init__(self, nombre, sueldo_base):
+        super().__init__(nombre, sueldo_base)
+
+    def calcular_salario(self):
+        # El salario de un empleado fijo es el sueldo base fijo
+        return self.get_sueldo_base()
+
+# Clase hija EmpleadoPorHoras
+class EmpleadoPorHoras(Empleado):
+    def __init__(self, nombre, sueldo_base, horas_trabajadas):
+        super().__init__(nombre, sueldo_base)
+        self.horas_trabajadas = horas_trabajadas
+
+    def calcular_salario(self):
+        # El salario por horas es el sueldo base por las horas trabajadas
+        return self.get_sueldo_base() * self.horas_trabajadas
+
+# Clase hija EmpleadoTemporal
+class EmpleadoTemporal(Empleado):
+    def __init__(self, nombre, sueldo_base, dias_trabajados):
+        super().__init__(nombre, sueldo_base)
+        self.dias_trabajados = dias_trabajados
+
+    def calcular_salario(self):
+        # El salario temporal es el sueldo base por los días trabajados
+        return self.get_sueldo_base() * self.dias_trabajados
+
+# Ejemplo de uso
+empleados = [
+    EmpleadoFijo("Juan", 2500),
+    EmpleadoPorHoras("Ana", 20, 160),  # Sueldo base de 20 por hora, 160 horas trabajadas
+    EmpleadoTemporal("Luis", 100, 15)  # Sueldo base de 100 por día, 15 días trabajados
+]
+
+# Calculamos y mostramos los salarios de todos los empleados
+for empleado in empleados:
+    print(f"Empleado: {empleado.nombre}, Salario: {empleado.calcular_salario()}")
