@@ -1,0 +1,29 @@
+# Clase base Transporte
+class Transporte:
+    def tipo_transporte(self):
+        raise NotImplementedError("Este método debe ser implementado por las clases hijas.")
+
+# Clase hija Coche
+class Coche(Transporte):
+    def tipo_transporte(self):
+        print("Este es un transporte terrestre.")
+
+# Clase hija Avion
+class Avion(Transporte):
+    def tipo_transporte(self):
+        print("Este es un transporte aéreo.")
+
+# Clase hija Barco
+class Barco(Transporte):
+    def tipo_transporte(self):
+        print("Este es un transporte marítimo.")
+
+# Ejemplo de uso
+transporte1 = Coche()
+transporte1.tipo_transporte()  # Imprime: Este es un transporte terrestre.
+
+transporte2 = Avion()
+transporte2.tipo_transporte()  # Imprime: Este es un transporte aéreo.
+
+transporte3 = Barco()
+transporte3.tipo_transporte()  # Imprime: Este es un transporte marítimo.
