@@ -1,1 +1,1 @@
-# acitividades-y-juego
+# acitividades
